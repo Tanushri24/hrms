@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { createEmployeeAction } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +16,7 @@ import {
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const initialState = {
   message: '',
@@ -22,6 +25,7 @@ const initialState = {
     address: [],
     department: [],
   },
+  success: false,
 };
 
 function SubmitButton() {
@@ -35,6 +39,18 @@ function SubmitButton() {
 
 export function EmployeeForm() {
   const [state, formAction] = useFormState(createEmployeeAction, initialState);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: 'Success!',
+        description: state.message,
+      });
+      router.push('/employees');
+    }
+  }, [state, router, toast]);
 
   return (
     <form action={formAction} className="space-y-6 max-w-lg">
@@ -71,7 +87,7 @@ export function EmployeeForm() {
         )}
       </div>
 
-      {state.message && !state.errors && (
+      {state.message && !state.success && (
          <Alert variant="destructive">
             <Terminal className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>

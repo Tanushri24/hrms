@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { addEmployee, deleteEmployee, markAttendance, addReview, addInsight, getEmployeeById, getAttendanceByEmployee, getReviewsByEmployee } from './data';
 import type { AttendanceStatus, PerformanceReview as PerformanceReviewType } from './types';
 import { summarizeEmployeeOverview } from '@/ai/flows/summarize-employee-overview-flow';
@@ -25,17 +24,18 @@ export async function createEmployeeAction(prevState: any, formData: FormData) {
     return {
       message: 'Invalid form data. Please check the fields and try again.',
       errors: validatedFields.error.flatten().fieldErrors,
+      success: false,
     };
   }
 
   try {
     await addEmployee(validatedFields.data);
   } catch (e) {
-    return { message: 'Failed to create employee.' };
+    return { message: 'Failed to create employee.', success: false };
   }
 
   revalidatePath('/employees');
-  redirect('/employees');
+  return { message: 'Employee added successfully!', success: true };
 }
 
 export async function deleteEmployeeAction(employeeId: string) {
