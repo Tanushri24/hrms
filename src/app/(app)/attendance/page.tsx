@@ -24,11 +24,11 @@ import type { AttendanceStatus } from '@/lib/types';
 
 const getStatusColor = (status: AttendanceStatus | 'Not Marked') => {
     switch (status) {
-        case 'present': return 'bg-green-500';
-        case 'absent': return 'bg-red-500';
-        case 'late': return 'bg-yellow-500';
-        case 'leave': return 'bg-blue-500';
-        default: return 'bg-gray-400';
+        case 'present': return 'bg-chart-2 text-white';
+        case 'absent': return 'bg-destructive text-destructive-foreground';
+        case 'late': return 'bg-chart-4 text-black';
+        case 'leave': return 'bg-primary text-primary-foreground';
+        default: return 'bg-muted text-muted-foreground';
     }
 }
 
@@ -92,7 +92,7 @@ export default async function AttendancePage() {
                         <Badge variant="secondary">{employee.department}</Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Badge className={cn("text-white capitalize", getStatusColor(employee.status as AttendanceStatus | 'Not Marked'))}>
+                        <Badge className={cn("capitalize", getStatusColor(employee.status as AttendanceStatus | 'Not Marked'))}>
                           {employee.status}
                         </Badge>
                       </TableCell>

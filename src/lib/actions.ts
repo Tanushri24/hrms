@@ -52,6 +52,7 @@ export async function markAttendanceAction(employeeId: string, date: Date, statu
     try {
         await markAttendance(employeeId, date, status);
         revalidatePath(`/employees/${employeeId}`);
+        revalidatePath('/attendance');
         return { message: `Attendance marked as ${status}.` };
     } catch (e) {
         return { message: 'Failed to mark attendance.' };
