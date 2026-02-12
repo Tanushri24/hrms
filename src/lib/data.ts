@@ -1,3 +1,4 @@
+
 import type { Employee, AttendanceRecord, PerformanceReview, AIInsight, AttendanceStatus } from './types';
 import { placeholderImages } from './placeholder-images.json';
 import { format } from 'date-fns';
@@ -55,6 +56,11 @@ export async function deleteEmployee(id: string): Promise<void> {
 }
 
 // Attendance Functions
+export async function getAllAttendance(): Promise<AttendanceRecord[]> {
+  await delay(100);
+  return [...attendance].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
 export async function getAttendanceByEmployee(employeeId: string): Promise<AttendanceRecord[]> {
   await delay(100);
   return attendance.filter(a => a.employeeId === employeeId).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

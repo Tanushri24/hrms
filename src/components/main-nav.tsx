@@ -1,8 +1,9 @@
+
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Bot } from 'lucide-react';
+import { LayoutDashboard, Users, CalendarDays } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import {
@@ -21,6 +22,11 @@ const links = [
     href: '/employees',
     label: 'Employees',
     icon: Users,
+  },
+  {
+    href: '/attendance',
+    label: 'Attendance',
+    icon: CalendarDays,
   },
 ];
 
