@@ -98,16 +98,23 @@ export function AttendanceManager({
   };
 
   const modifierStyles = {
-    present: { backgroundColor: 'hsl(var(--chart-2))', color: 'hsl(var(--primary-foreground))', opacity: 0.8 },
-    absent: { backgroundColor: 'hsl(var(--destructive))', color: 'hsl(var(--destructive-foreground))', opacity: 0.8 },
-    late: { backgroundColor: 'hsl(var(--chart-4))', color: 'hsl(var(--foreground))', opacity: 0.8 },
-    leave: { backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))', opacity: 0.8 },
+    present: { backgroundColor: 'hsl(var(--chart-2))', color: 'hsl(var(--primary-foreground))' },
+    absent: { backgroundColor: 'hsl(var(--destructive))', color: 'hsl(var(--destructive-foreground))' },
+    late: { backgroundColor: 'hsl(var(--chart-4))', color: 'hsl(var(--card-foreground))' },
+    leave: { backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))' },
   };
+  
+  const legend = [
+      { status: 'Present', color: 'bg-chart-2' },
+      { status: 'Absent', color: 'bg-destructive' },
+      { status: 'Late', color: 'bg-chart-4' },
+      { status: 'On Leave', color: 'bg-primary' },
+  ];
 
   return (
     <div className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center gap-4">
                 <Calendar
                     mode="single"
                     selected={date}
@@ -117,9 +124,17 @@ export function AttendanceManager({
                     modifiers={attendanceModifiers}
                     modifiersStyles={modifierStyles}
                 />
+                <div className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-md border p-2 text-sm text-muted-foreground">
+                    {legend.map((item) => (
+                        <div key={item.status} className="flex items-center gap-2">
+                            <span className={cn('h-3 w-3 rounded-full', item.color)} />
+                            <span>{item.status}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="space-y-4">
-                 <h3 className="font-medium">Details</h3>
+                 <h3 className="font-semibold text-lg">Mark/Update Attendance</h3>
                 <div className="space-y-2">
                     <p className="text-sm font-medium">Date</p>
                     <p className="text-sm text-muted-foreground">{date ? format(date, 'PPP') : 'None selected'}</p>
@@ -147,7 +162,7 @@ export function AttendanceManager({
         <Separator />
         
         <div>
-            <h3 className="font-medium mb-2">Attendance History</h3>
+            <h3 className="font-semibold text-lg mb-4">Attendance History</h3>
             <div className="rounded-md border max-h-64 overflow-y-auto">
                 <Table>
                     <TableHeader className="sticky top-0 bg-background">

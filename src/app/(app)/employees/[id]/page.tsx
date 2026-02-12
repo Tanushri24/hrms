@@ -29,8 +29,8 @@ export default async function EmployeeDetailPage({ params }: { params: { id: str
   return (
     <div className="grid gap-6">
       <PageHeader
-        title={employee.fullName}
-        description={`Details for ${employee.fullName}`}
+        title="Employee Details"
+        description={`Full profile for ${employee.fullName}`}
         actions={
           <Link href="/employees" passHref>
             <Button variant="outline">
@@ -43,37 +43,29 @@ export default async function EmployeeDetailPage({ params }: { params: { id: str
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-1 space-y-6">
           <Card>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <Avatar className="h-20 w-20 border">
+            <CardHeader className="items-center p-6 text-center">
+              <Avatar className="h-24 w-24 border">
                 <AvatarImage src={employee.avatarUrl} alt={employee.fullName} data-ai-hint="person portrait" />
                 <AvatarFallback>{employee.fullName.slice(0, 2)}</AvatarFallback>
               </Avatar>
-              <div>
+              <div className="pt-4">
                 <CardTitle className="text-2xl">{employee.fullName}</CardTitle>
-                <CardDescription>
+                <CardDescription className="pt-1">
                     <Badge variant="secondary">{employee.department}</Badge>
                 </CardDescription>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4 text-sm">
-                <div className="flex items-center gap-3">
-                    <User className="h-4 w-4 text-muted-foreground" />
-                    <span>{employee.fullName}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                    <MapPin className="h-4 w-4 text-muted-foreground" />
+            <CardContent className="space-y-2 text-sm">
+                <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
                     <span>{employee.address}</span>
-                </div>
-                 <div className="flex items-center gap-3">
-                    <Building className="h-4 w-4 text-muted-foreground" />
-                    <span>{employee.department} Department</span>
                 </div>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-xl font-semibold">
                     <Bot className="h-5 w-5" />
                     AI Assistant
                 </CardTitle>
@@ -88,7 +80,7 @@ export default async function EmployeeDetailPage({ params }: { params: { id: str
         <div className="lg:col-span-2 space-y-6">
             <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2"><CalendarDays className="h-5 w-5" />Attendance</CardTitle>
+                    <CardTitle className="flex items-center gap-2 text-xl font-semibold"><CalendarDays className="h-5 w-5" />Attendance</CardTitle>
                     <CardDescription>Mark and view attendance records.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -98,7 +90,7 @@ export default async function EmployeeDetailPage({ params }: { params: { id: str
 
             <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2"><Star className="h-5 w-5" />Performance</CardTitle>
+                    <CardTitle className="flex items-center gap-2 text-xl font-semibold"><Star className="h-5 w-5" />Performance</CardTitle>
                     <CardDescription>Manage and view performance reviews.</CardDescription>
                 </CardHeader>
                 <CardContent>
